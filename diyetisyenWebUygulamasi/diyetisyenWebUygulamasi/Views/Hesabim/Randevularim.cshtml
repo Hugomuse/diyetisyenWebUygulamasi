@@ -1,0 +1,80 @@
+﻿@model IEnumerable<diyetisyenWebUygulamasi.Controllers.HesabimController.RandevuViewModel>
+@{
+    ViewBag.Title = "Randevularim";
+    Layout = "~/Views/Shared/_DiyetisyenLayout.cshtml";
+}
+@{ 
+    string GetYetki()
+    {
+        if (User.IsInRole("Diyetisyen"))
+            return "Diyetisyen";
+        else if (User.IsInRole("Kullanıcı"))
+            return "Kullanıcı";
+        else
+            return "Giriş Yapmamış";
+    }
+}
+<div class="container mt-5">
+    <h2 class="mb-4">Randevu Tablosu</h2>
+    @if (GetYetki() == "Diyetisyen")
+    {
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Kullanıcı</th>
+                    <th>Randevu Tarihi</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var randevu in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@Url.Content(randevu.kullanici.ResimYolu)" class="rounded-circle me-2" alt="Profil Fotoğrafı" height="40" width="40" style="object-fit:contain">
+                            @randevu.kullanici.Ad
+                        </td>
+                        <td>@randevu.randevu.tarih</td>
+                        <td>
+                            <form action="/Hesabim/RandevuyuSil" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="@randevu.randevu.Id" />
+                                <button class="btn btn-danger btn-sm">Randevuyu Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (GetYetki() == "Kullanıcı")
+    {
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Diyetisyen</th>
+                    <th>Randevu Tarihi</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var randevu in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@Url.Content(randevu.diyetisyen.ResimYolu)" class="rounded-circle me-2" alt="Profil Fotoğrafı" height="40" width="40">
+                            @randevu.diyetisyen.Ad
+                        </td>
+                        <td>@randevu.randevu.tarih</td>
+                        <td>
+                            <form action="/Hesabim/RandevuyuSil" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="@randevu.randevu.Id" />
+                                <button class="btn btn-danger btn-sm">Randevuyu Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>

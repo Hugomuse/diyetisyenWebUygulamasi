@@ -1,0 +1,30 @@
+﻿@model diyetisyenWebUygulamasi.Models.Kullanici
+@{
+    ViewBag.Title = "Hesap Detayı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form action="/Hesabim/Detay" enctype="multipart/form-data" method="post" class="w-75 m-auto mt-5">
+    <h2>Hesabımı Düzenle</h2>
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="mb-3">
+        <label class="form-label">Yeni Şifre:</label>
+        <input type="text" class="form-control" id="sifre" name="sifre" placeholder="Şifre" value="@Model.Sifre">
+    </div>
+    <div class="mb-5">
+        <label class="form-label">Profil Resminizi Yükleyin</label>
+        <input type="file" id="resim" name="resim" accept="image/*">
+    </div>
+    <div class="mb-5 align-items-center d-flex">
+        <input type="radio" value="true" id="resimRadio1" name="resimRadio" class="form-check-input" />
+        <label class="form-check-label ms-2">Değişecek</label>
+        <input type="radio" value="false" id="resimRadio2" name="resimRadio" class="form-check-input ms-2" />
+        <label class="form-check-label ms-2">Değişmeyecek</label>
+        @if (!string.IsNullOrEmpty(Model.ResimYolu))
+        {
+            <img src="@Url.Content(Model.ResimYolu)" style="height:50px" class="ms-2" />
+        }
+
+    </div>
+    <button type="submit" class="btn btn-warning mb-5">Düzenle</button>
+</form>
+

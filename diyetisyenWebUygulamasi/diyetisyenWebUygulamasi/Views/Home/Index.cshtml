@@ -1,0 +1,44 @@
+﻿@model IEnumerable<diyetisyenWebUygulamasi.Controllers.HomeController.DiyetisyenViewModel>
+@{
+    ViewBag.Title = "Diyetisyen Uygulaması";
+}
+
+<main class="container ms-0 me-0 ms-md-2 me-md-2 me-lg-4  ms-lg-4 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+            @foreach (var diyetisyen in Model)
+            {
+                <div class="row mt-2 border-secondary-subtle border rounded-4 justify-content-center">
+                    <div class="col-12 col-md-4">
+                        @if (!string.IsNullOrEmpty(diyetisyen.diyetisyen.ResimYolu))
+                        {
+                            <img src="@Url.Content(diyetisyen.diyetisyen.ResimYolu)" style="width:100%; height:100%; max-height:150px;object-fit:contain" />
+                        }
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col  d-flex justify-content-start align-items-center">
+                                    ⭐
+                                    <span class="fs-5 me-2">@diyetisyen.puan</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h2>@diyetisyen.diyetisyen.Ad</h2>
+                            </div>
+                            <div class="row">
+                                <p>@diyetisyen.diyetisyen.Aciklama</p>
+                            </div>
+                            <div class="row">
+                                <form action="/diyetisyen/detay/@diyetisyen.diyetisyen.Ad" method="post">
+                                    <button class="btn btn-primary">Detay</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+</main>

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "_DiyetisyenLayout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @if (User.IsInRole("Diyetisyen"))
+    {
+        <div class="row">
+            <div class="col-12 col-md-4 d-flex flex-column border-end">
+                <form action="/Hesabim/Detay" method="get" class="mb-2 d-flex justify-content-center">
+                    <input type="hidden" name="ad" value="@User.Identity.Name" />
+                    <button class="btn btn-primary w-100">Hesabımı Düzenle</button>
+                </form>
+                <form action="/Hesabim/Postlar" method="get" class="mb-2 d-flex justify-content-center">
+                    <input type="hidden" name="ad" value="@User.Identity.Name" />
+                    <button class="btn btn-primary w-100">Postlarımı Düzenle</button>
+                </form>
+                <form action="/Hesabim/Randevular" method="get" class="mb-2 d-flex justify-content-center">
+                    <input type="hidden" name="ad" value="@User.Identity.Name" />
+                    <button class="btn btn-primary w-100">Randevularım</button>
+                </form>
+            </div>
+            <div class="col-12 col-md-8">
+                @RenderBody()
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+                @RenderBody()
+            </div>
+        </div>
+    }
+</div>
+

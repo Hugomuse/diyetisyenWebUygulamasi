@@ -1,0 +1,134 @@
+﻿@model diyetisyenWebUygulamasi.Controllers.DiyetisyenDetayModel
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <!-- Diyetisyen Bilgileri -->
+    <div class="row mb-4 text-center">
+        <div class="col-12">
+            <img src="@Url.Content(Model.diyetisyen.ResimYolu)" style="object-fit:contain; height:100px;width:100px " class="rounded-circle" />
+            <h2 class="fw-bold">@Model.diyetisyen.Ad</h2>
+            <p class="text-muted">@Model.diyetisyen.Aciklama</p>
+            <div class="d-flex justify-content-center align-items-center">
+                ⭐
+                <span class="fs-5 me-2">@ViewBag.puan</span>
+                ❤️
+                <span class="fs-5">@ViewBag.begeni beğeni</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div id="diyetisyenCarousel" class="carousel carousel-dark slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner carousel-dark">
+            @for (int i = 0; i < Model.posts.Count; i++)
+            {
+                var post = Model.posts[i];
+                if (i == 0)
+                {
+                    <div class="carousel-item active">
+                        <img src="@Url.Content(post.MedyaYolu)" class="d-block ms-auto me-auto" alt="İlan Resim 1" style="object-fit:contain;height:200px">
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <img src="@Url.Content(post.MedyaYolu)" class="d-block ms-auto me-auto" alt="İlan Resim 1" style="object-fit:contain;height:200px">
+                    </div>
+                }
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#diyetisyenCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Önceki</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#diyetisyenCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sonraki</span>
+        </button>
+    </div>
+
+    <!-- İlan Detayları -->
+    <div class="row text-center">
+        <div class="col-12">
+            <h3 class="fw-bold">@Model.diyetisyen.ilanBaslik</h3>
+            <p>@Model.diyetisyen.ilanAciklama</p>
+            <div class="d-flex justify-content-center align-items-center">
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container mt-5 mb-5">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="siparis-tab" data-bs-toggle="tab" data-bs-target="#siparis" type="button" role="tab" aria-controls="siparis" aria-selected="true">Siparişe Puan Ver</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="randevu-tab" data-bs-toggle="tab" data-bs-target="#randevu" type="button" role="tab" aria-controls="randevu" aria-selected="false">Randevu Al</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="begeni-tab" data-bs-toggle="tab" data-bs-target="#begeni" type="button" role="tab" aria-controls="begeni" aria-selected="false">Beğenme Durumu</button>
+            </li>
+        </ul>
+        <div class="tab-content mt-3" id="myTabContent">
+            <!-- Siparişe Puan Verme Formu -->
+            @if (ViewBag.YorumYapabilir)
+            {
+                <div class="tab-pane fade show active" id="siparis" role="tabpanel" aria-labelledby="siparis-tab">
+                    <form action="/Diyetisyen/YorumYap" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="@Model.diyetisyen.Id" />
+                        <div class="mb-3">
+                            <label for="Yildiz" class="form-label">Puan</label>
+                            <select class="form-select" id="yildiz" name="yildiz">
+                                <option selected>Puan Seçin</option>
+                                <option value="1">1 - Kötü</option>
+                                <option value="2">2 - Zayıf</option>
+                                <option value="3">3 - Orta</option>
+                                <option value="4">4 - İyi</option>
+                                <option value="5">5 - Mükemmel</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="icerik" class="form-label">Yorum</label>
+                            <textarea class="form-control" id="icerik" rows="3" name="icerik" placeholder="Yorumunuzu yazın"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            }
+
+            <!-- Randevu Alma Formu -->
+            <div class="tab-pane fade" id="randevu" role="tabpanel" aria-labelledby="randevu-tab">
+                <form action="/Diyetisyen/RandevuAl" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="@Model.diyetisyen.Id" />
+                    <div class="mb-3">
+                        <label for="randevuTarihi" class="form-label">Randevu Tarihi Seçin</label>
+                        <input type="date" class="form-control" id="randevuTarihi" name="randevuTarihi">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Randevu Al</button>
+                </form>
+            </div>
+
+            <!--Beğeni Formu-->
+            <div class="tab-pane fade" id="begeni" role="tabpanel" aria-labelledby="begeni-tab">
+                <form action="/Diyetisyen/Begeni" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="@Model.diyetisyen.Id" />
+                    @if (ViewBag.Begendi)
+                    {
+                        <button type="submit" class="btn btn-danger" name="btn" value="kaldir">Beğenmeyi Kaldır</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success" name="btn" value="ekle">Diyetisyeni Beğen</button>
+                    }
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap | Diyetisyen Programı</title>
+    <link href="~/Content/bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+                color: white;
+            }
+    </style>
+</head>
+
+<body class="w-100">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-6">
+                <h2 class="mb-3 text-center">Giriş Yap</h2>
+                <form action="/Yetki/GirisYap" enctype="multipart/form-data" method="post" class="w-75 m-auto container-fluid">
+                    <div class="mb-3 row justify-content-center">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label">Ad:</label>
+                            <input type="text" class="form-control w-100 ms-auto me-auto" id="ad" name="ad">
+                        </div>
+                    </div>
+                    <div class="mb-3 row justify-content-center">
+                        <div class="col-12 col-lg-6">
+                            <label class="form-label">Şifre:</label>
+                            <input type="password" class="form-control w-100 ms-auto me-auto" id="sifre" name="sifre">
+                        </div>
+                    </div>
+                    <div class="mb-3 row justify-content-center">
+                        <div class="col-12 col-lg-6">
+                            <div>
+                                <h3>Giriş Tipi</h3>
+                                <div class="col-12 col-sm-4 d-flex flex-nowrap w-100">
+                                    <input type="radio" value="kullanici" id="kullaniciRadio" name="yetkiRadio" class="form-check-input" />
+                                    <label class="form-check-label ms-3">Kullanıcı</label>
+                                </div>
+                                <div class="col-12 col-sm-4 d-flex flex-nowrap w-100">
+                                    <input type="radio" value="diyetisyen" id="diyetisyenRadio" name="yetkiRadio" class="form-check-input" />
+                                    <label class="form-check-label ms-3">Diyetisyen</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-success mb-5 ms-auto me-auto d-block">Giriş Yap</button>
+                </form>
+                
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <form action="/Yetki/KayitOl" method="get" class="d-flex justify-content-center">
+                <p class="mt-auto mb-auto">Hesabın yok mu ?</p>
+                <button href="/" class="border-0">Kayıt Ol</button>
+            </form>
+        </div>
+
+        </div>
+</body>
+</html>
